@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'application'
     id 'jacoco'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+
 }
 
 group = 'ru.clevertec'
@@ -16,6 +18,9 @@ repositories {
 }
 
 dependencies {
+
+    implementation 'org.postgresql:postgresql:42.7.3'
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
@@ -24,6 +29,12 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+}
+
+shadowJar {
+    archiveBaseName.set('clevertec-check')
+    archiveClassifier.set('')
+    archiveVersion.set('')
 }
 
 test {

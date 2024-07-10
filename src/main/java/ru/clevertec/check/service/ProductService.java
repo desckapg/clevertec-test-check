@@ -33,4 +33,19 @@ public class ProductService {
         return Optional.ofNullable(products.get(id));
     }
 
+    public void addProduct(Product product) throws CheckException {
+        productDao.add(product);
+        products.put(product.getId(), product);
+    }
+
+    public void deleteProduct(int id) throws CheckException {
+        products.remove(id);
+        productDao.delete(id);
+    }
+
+    public void updateProduct(Product product) throws CheckException {
+        products.put(product.getId(), product);
+        productDao.update(product);
+    }
+
 }

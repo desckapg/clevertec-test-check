@@ -7,13 +7,12 @@ import ru.clevertec.check.exception.CheckException;
 import ru.clevertec.check.exception.CheckExceptionWriter;
 import ru.clevertec.check.model.Check;
 import ru.clevertec.check.params.ParamsProcessor;
-import ru.clevertec.check.repository.csv.CSVRepository;
+import ru.clevertec.check.repository.sql.SqlRepository;
 import ru.clevertec.check.service.DiscountCardService;
 import ru.clevertec.check.service.ProductService;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class CheckRunner {
 
@@ -24,15 +23,16 @@ public class CheckRunner {
         ParamsProcessor paramsProcessor = new ParamsProcessor(args);
         try {
             paramsProcessor.process();
-            CSVRepository csvRepository = new CSVRepository(
-                    paramsProcessor.getRequiredParams().getPathToProductFile(),
-                    "./src/main/resources/discountCards.csv"
+            SqlRepository repository = new SqlRepository(
+                    paramsProcessor.getRequiredParams().getDatasourceUrl(),
+                    paramsProcessor.getRequiredParams().getDatasourceUsername(),
+                    paramsProcessor.getRequiredParams().getDatasourcePassword()
             );
 
-            csvRepository.load();
+            repository.load();
 
-            productService = new ProductService(csvRepository.getDaoFactoryImpl().getProductDAO());
-            discountCardService = new DiscountCardService(csvRepository.getDaoFactoryImpl().getDiscountCardDAO());
+            productService = new ProductService(repository.getDaoFactoryImpl().getProductDAO());
+            discountCardService = new DiscountCardService(repository.getDaoFactoryImpl().getDiscountCardDAO());
 
             productService.load();
             discountCardService.load();;

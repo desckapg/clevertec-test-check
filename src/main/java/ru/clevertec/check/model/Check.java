@@ -8,13 +8,13 @@ public class Check {
     private final LocalDateTime dateTime;
 
     private final List<CheckPosition> positions;
-    private final String discountCardNumber;
+    private final Integer discountCardNumber;
     private final Integer cardDiscount;
     private final Float totalPrice;
     private final Float totalDiscount;
     private final Float totalPriceWithDiscount;
 
-    private Check(List<CheckPosition> positions, String discountCardNumber, Integer cardDiscount,
+    private Check(List<CheckPosition> positions, Integer discountCardNumber, Integer cardDiscount,
                   Float totalPrice, Float totalDiscount, Float totalPriceWithDiscount) {
         this.dateTime = LocalDateTime.now();
         this.discountCardNumber = discountCardNumber;
@@ -43,7 +43,7 @@ public class Check {
         return totalPriceWithDiscount;
     }
 
-    public String getDiscountCardNumber() {
+    public Integer getDiscountCardNumber() {
         return discountCardNumber;
     }
 
@@ -54,7 +54,7 @@ public class Check {
     public static class Builder {
 
         private List<CheckPosition> positions;
-        private String discountCardNumber;
+        private Integer discountCardNumber;
         private Integer cardDiscount;
         private Float totalPrice;
         private Float totalDiscount;
@@ -76,7 +76,7 @@ public class Check {
             this.totalPriceWithDiscount = totalPriceWithDiscount;
         }
 
-        public void setDiscountCardNumber(String discountCardNumber) {
+        public void setDiscountCardNumber(Integer discountCardNumber) {
             this.discountCardNumber = discountCardNumber;
         }
 

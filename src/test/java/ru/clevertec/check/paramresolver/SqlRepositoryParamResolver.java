@@ -5,24 +5,24 @@ import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import ru.clevertec.check.exception.CheckException;
-import ru.clevertec.check.repository.csv.CSVRepository;
-import ru.clevertec.check.repository.csv.CSVRepositoryTest;
+import ru.clevertec.check.repository.sql.SqlRepository;
 
-public class CSVRepositoryParamResolver implements ParameterResolver {
+public class SqlRepositoryParamResolver implements ParameterResolver {
 
-    private static final String pathToProductFile = "./src/main/resources/products.csv";
-    private static final String pathToCardFile = "./src/main/resources/discountCards.csv";
+    private static final String url = "jdbc:postgresql://localhost:5432/test_test";
+    private static final String username = "test";
+    private static final String password = "test";
 
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        return parameterContext.getParameter().getType() == CSVRepository.class;
+        return parameterContext.getParameter().getType() == SqlRepository.class;
     }
 
     @Override
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        var store = extensionContext.getStore(ExtensionContext.Namespace.create(CSVRepositoryTest.class));
-        return store.getOrComputeIfAbsent(CSVRepository.class, it -> {
-            CSVRepository repository = new CSVRepository(pathToProductFile, pathToCardFile);
+        var store = extensionContext.getStore(ExtensionContext.Namespace.create(SqlRepository.class));
+        return store.getOrComputeIfAbsent(SqlRepository.class, it -> {
+            SqlRepository repository = new SqlRepository(url, username, password);
             try {
                 repository.load();
             } catch (CheckException e) {
@@ -31,4 +31,5 @@ public class CSVRepositoryParamResolver implements ParameterResolver {
             return repository;
         });
     }
+
 }

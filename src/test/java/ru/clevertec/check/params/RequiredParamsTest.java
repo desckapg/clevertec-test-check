@@ -39,7 +39,13 @@ public class RequiredParamsTest {
     @Test
     @Order(2)
     void processWithRightArgs() {
-        assertDoesNotThrow(() -> new RequiredParams(new String[]{"3-1", "2-5", "5-1", "balanceDebitCard=100"}).process());
+        assertDoesNotThrow(() -> new RequiredParams(new String[]{"3-1", "2-5", "5-1",
+                "balanceDebitCard=100",
+                "saveToFile=result.csv",
+                "datasource.url=jdbc:postgresql://localhost:5432/test",
+                "datasource.username=postgres",
+                "datasource.password=postgres"
+        }).process());
     }
 
 
@@ -47,7 +53,14 @@ public class RequiredParamsTest {
     void checkParamsAfterProcess() {
         assertDoesNotThrow(() -> {
             try {
-                RequiredParams params =  new RequiredParams(new String[]{"3-1", "2-5", "5-1", "balanceDebitCard=100"});
+                RequiredParams params =  new RequiredParams(new String[]{"3-1", "2-5", "5-1",
+                        "balanceDebitCard=100",
+                        "saveToFile=result.csv",
+                        "saveToFile=result.csv",
+                        "datasource.url=jdbc:postgresql://localhost:5432/test",
+                        "datasource.username=postgres",
+                        "datasource.password=postgres"
+                });
                 params.process();
             } catch (CheckException e) {
                 throw new RuntimeException(e);

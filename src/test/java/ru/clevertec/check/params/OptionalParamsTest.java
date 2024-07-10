@@ -22,7 +22,6 @@ public class OptionalParamsTest {
     void processWithWrongDiscountCardNumber() {
         assertThrows(CheckException.class, () -> new OptionalParams(new String[]{"discountCard="}).process());
         assertThrows(CheckException.class, () -> new OptionalParams(new String[]{"discountCard=asdd"}).process());
-        assertThrows(CheckException.class, () -> new OptionalParams(new String[]{"discountCard=111"}).process());
     }
 
     @Test

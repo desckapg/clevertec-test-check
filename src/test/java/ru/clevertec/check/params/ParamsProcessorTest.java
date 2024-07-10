@@ -23,9 +23,18 @@ public class ParamsProcessorTest {
     @Test
     @Order(1)
     void processWithRightArgs() {
+        String[] args = {
+                "1-1",
+                "balanceDebitCard=100",
+                "discountCard=1111",
+                "saveToFile=result.csv",
+                "datasource.url=jdbc:postgresql://localhost:5432/test",
+                "datasource.username=postgres",
+                "datasource.password=postgres"
+        };
         assertDoesNotThrow(() -> {
-            new OptionalParams(new String[]{"1-1", "balanceDebitCard=100", "discountCard=1111"}).process();
-            new RequiredParams(new String[]{"1-1", "balanceDebitCard=100", "discountCard=1111"}).process();
+            new OptionalParams(args).process();
+            new RequiredParams(args).process();
         });
     }
 

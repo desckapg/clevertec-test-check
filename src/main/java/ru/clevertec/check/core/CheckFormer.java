@@ -75,6 +75,7 @@ public class CheckFormer {
 
             checkPositionBuilder.setProductId(product.get().getId());
             checkPositionBuilder.setQuantity(quantity);
+            checkPositionBuilder.setDescription(product.get().getDescription());
             checkPositionBuilder.setPrice(positionPrice);
             checkPositionBuilder.setDiscount(positionDiscount);
             checkPositionBuilder.setPriceWithDiscount(positionPriceWithDiscount);

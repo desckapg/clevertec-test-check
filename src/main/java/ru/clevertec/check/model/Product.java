@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Product {
 
-    private final Integer id;
+    private Integer id;
     private final String description;
     private final Float price;
     private final Integer quantityInStock;
@@ -22,6 +22,10 @@ public class Product {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDescription() {

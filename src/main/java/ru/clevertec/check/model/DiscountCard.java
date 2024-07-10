@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class DiscountCard {
 
-    private final Integer id;
-    private final String number;
+    private Integer id;
+    private final Integer number;
     private final Integer discount;
 
-    private DiscountCard(Integer id, String number, Integer discount) {
+    private DiscountCard(Integer id, Integer number, Integer discount) {
         this.id = id;
         this.number = number;
         this.discount = discount;
@@ -18,7 +18,11 @@ public class DiscountCard {
         return id;
     }
 
-    public String getNumber() {
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getNumber() {
         return number;
     }
 
@@ -55,14 +59,14 @@ public class DiscountCard {
     public static class Builder {
 
         private Integer id;
-        private String number;
+        private Integer number;
         private Integer discount;
 
         public void setId(Integer id) {
             this.id = id;
         }
 
-        public void setNumber(String number) {
+        public void setNumber(Integer number) {
             this.number = number;
         }
 

@@ -13,8 +13,10 @@ public class RequiredParams {
 
     private Float cardBalance;
     private Map<Integer, Integer> products;
-    private String pathToProductFile;
     private String saveToFile;
+    private String datasourceUrl;
+    private String datasourceUsername;
+    private String datasourcePassword;
 
     public RequiredParams(String[] params) {
         this.params = params;
@@ -42,18 +44,26 @@ public class RequiredParams {
                 this.products.put(
                         id,
                         this.products.getOrDefault(id, 0) + quantity);
-            } else if (param.startsWith("pathToFile=")) {
-                this.pathToProductFile = param.substring("pathToFile=".length());
+            } else if (param.startsWith("datasource.url=")) {
+                this.datasourceUrl = param.substring("datasource.url=".length());
+            } else if (param.startsWith("datasource.username=")) {
+                this.datasourceUsername = param.substring("datasource.username=".length());
+            } else if (param.startsWith("datasource.password=")) {
+                this.datasourcePassword = param.substring("datasource.password=".length());
             }
         }
         if (Float.isNaN(cardBalance)) {
             throw new BadRequestException("NO CARD BALANCE IN ARGS");
         } else if (products.isEmpty()) {
             throw new BadRequestException("NO PRODUCTS IN ARGS (OR WRONG FORMAT)");
-        } else if (Objects.isNull(pathToProductFile)) {
-            throw new BadRequestException("WRONG pathToFile");
         } else if (Objects.isNull(saveToFile)) {
             throw new BadRequestException("WRONG saveToFile");
+        } else if (Objects.isNull(datasourceUrl)) {
+            throw new BadRequestException("WRONG datasource.url");
+        } else if (Objects.isNull(datasourceUsername)) {
+            throw new BadRequestException("WRONG datasource.username");
+        } else if (Objects.isNull(datasourcePassword)) {
+            throw new BadRequestException("WRONG datasource.password");
         }
     }
 
@@ -66,11 +76,19 @@ public class RequiredParams {
         return products;
     }
 
-    public String getPathToProductFile() {
-        return pathToProductFile;
-    }
-
     public String getSaveToFile() {
         return saveToFile;
+    }
+
+    public String getDatasourceUrl() {
+        return datasourceUrl;
+    }
+
+    public String getDatasourceUsername() {
+        return datasourceUsername;
+    }
+
+    public String getDatasourcePassword() {
+        return datasourcePassword;
     }
 }

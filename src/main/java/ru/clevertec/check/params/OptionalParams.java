@@ -9,7 +9,7 @@ public class OptionalParams {
 
     private final String[] params;
 
-    private String discountCardNumber;
+    private Integer discountCardNumber;
 
     public OptionalParams(String[] params) {
         this.params = params;
@@ -19,8 +19,9 @@ public class OptionalParams {
     public void process() throws CheckException {
         for (String param : params) {
             if (param.startsWith("discountCard=")) {
-                discountCardNumber = param.substring("discountCard=".length());
-                if (!discountCardNumber.matches("\\d{4}")) {
+                try {
+                    discountCardNumber = Integer.parseUnsignedInt(param.substring("discountCard=".length()));
+                } catch (NumberFormatException ignored) {
                     throw new BadRequestException("WRONG DISCOUNT CARD NUMBER");
                 }
             }
@@ -31,7 +32,7 @@ public class OptionalParams {
         return Objects.nonNull(discountCardNumber);
     }
 
-    public String getDiscountCardNumber() {
+    public Integer getDiscountCardNumber() {
         return discountCardNumber;
     }
 

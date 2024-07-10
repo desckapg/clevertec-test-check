@@ -4,14 +4,16 @@ public class CheckPosition {
 
     private final Integer productId;
     private final Integer quantity;
+    private final String description;
     private final Float price;
     private final Float discount;
     private final Float priceWithDiscount;
     private final DiscountType discountType;
 
-    private CheckPosition(Integer productId, Integer quantity, Float price, Float discount, Float priceWithDiscount, DiscountType discountType) {
+    private CheckPosition(Integer productId, Integer quantity, String description, Float price, Float discount, Float priceWithDiscount, DiscountType discountType) {
         this.productId = productId;
         this.quantity = quantity;
+        this.description = description;
         this.price = price;
         this.discount = discount;
         this.priceWithDiscount = priceWithDiscount;
@@ -24,6 +26,10 @@ public class CheckPosition {
 
     public Integer getQuantity() {
         return quantity;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public Float getPrice() {
@@ -51,6 +57,7 @@ public class CheckPosition {
     public static class Builder {
         private Integer productId;
         private Integer quantity;
+        private String description;
         private Float price;
         private Float discount;
         private Float priceWithDiscount;
@@ -62,6 +69,10 @@ public class CheckPosition {
 
         public void setQuantity(Integer quantity) {
             this.quantity = quantity;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
         }
 
         public void setPrice(Float price) {
@@ -81,7 +92,7 @@ public class CheckPosition {
         }
 
         public CheckPosition build() {
-            return new CheckPosition(productId, quantity, price, discount, priceWithDiscount, discountType);
+            return new CheckPosition(productId, quantity, description, price, discount, priceWithDiscount, discountType);
         }
     }
 }

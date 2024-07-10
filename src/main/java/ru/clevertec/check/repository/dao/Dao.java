@@ -8,5 +8,8 @@ public interface Dao<T> {
 
     T get(int id) throws CheckException;
     List<T> getAll() throws CheckException;
+    void add(T obj) throws CheckException;
+    void update(T obj) throws CheckException;
+    void delete(int id) throws CheckException;
 
 }
