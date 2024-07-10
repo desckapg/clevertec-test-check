@@ -11,6 +11,8 @@ import ru.clevertec.check.repository.csv.CSVRepository;
 import ru.clevertec.check.service.DiscountCardService;
 import ru.clevertec.check.service.ProductService;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class CheckRunner {
@@ -19,11 +21,11 @@ public class CheckRunner {
     private static DiscountCardService discountCardService;
 
     public static void main(String[] args) {
+        ParamsProcessor paramsProcessor = new ParamsProcessor(args);
         try {
-            ParamsProcessor paramsProcessor = new ParamsProcessor(args);
             paramsProcessor.process();
             CSVRepository csvRepository = new CSVRepository(
-                    "./src/main/resources/products.csv",
+                    paramsProcessor.getRequiredParams().getPathToProductFile(),
                     "./src/main/resources/discountCards.csv"
             );
 
@@ -38,13 +40,18 @@ public class CheckRunner {
             CheckFormer checkFormer = new CheckFormer(paramsProcessor.getRequiredParams(), paramsProcessor.getOptionalParams());
             Check check = checkFormer.form();
 
-            CSVCheckWriter csvCheckWriter = new CSVCheckWriter("result.csv");
+            CSVCheckWriter csvCheckWriter = new CSVCheckWriter(paramsProcessor.getRequiredParams().getSaveToFile());
             ConsoleCheckWriter consoleCheckWriter = new ConsoleCheckWriter();
 
             csvCheckWriter.write(check);
             consoleCheckWriter.write(check);
         } catch (CheckException e) {
-            new CheckExceptionWriter("result.csv").write(e);
+            String saveToFile = paramsProcessor.getRequiredParams().getSaveToFile();
+            if (saveToFile != null && Files.exists(Path.of(saveToFile))) {
+                new CheckExceptionWriter(saveToFile).write(e);
+            } else {
+                new CheckExceptionWriter("result.csv").write(e);
+            }
         }
     }
 
